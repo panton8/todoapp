@@ -3,19 +3,10 @@ body{
 	}
 
 input{
-	width: 100%;
+	width: 25%;
 	padding: 12px 20px;
 	margin: 8px 0;
 	box-sizing: border-box;
-}
-
-input::placeholder {
-  color: #d3d3d3;
-}
-
-.submit{
-	background-color: #6BA3E8;
-	padding: 12px;
 }
 
 .center-column{
@@ -32,7 +23,7 @@ input::placeholder {
 	margin: 10px;
 	padding: 20px;
 	border-radius: 3px;
-	color: #fff;
+	color: #ffff;
 	font-size: 16px;
 	box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
 }
@@ -41,13 +32,9 @@ input::placeholder {
 	background-color: #ffae19;
 	border-color: #e59400;
 }
-.submit{
-	background-color: #6BA3E8;
-	border-color: #6BA3E8;
-}
-.filter{
-	width: 100%;
-	background-color: midnightblue;
-	border-color: midnightblue;
-	padding: 12px;
+
+.special{
+	background-color: darkblue;
+	border-color: black;
+	width: 10%;
 }
