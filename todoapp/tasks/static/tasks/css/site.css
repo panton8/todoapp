@@ -51,3 +51,22 @@ input::placeholder {
 	border-color: midnightblue;
 	padding: 12px;
 }
+
+.sign-out{
+	color: greenyellow;
+	font-size: 30px;
+	float: right;
+}
+
+.sign-out:hover{
+	color: gainsboro;
+}
+
+.sign-out:active{
+	color: greenyellow;
+}
+
+.greating{
+	font-size: 30px;
+	font-style: oblique;
+}
