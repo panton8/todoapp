@@ -1,20 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
 {% load static %}
 <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'tasks/css/site.css' %}">
+    <link rel="stylesheet" href="{% static 'tasks/css/filter.css' %}">
 </head>
+<body>
+    <form method="GET" action="/day/">
+    <label for="date">Choose the date:</label>
+    <input type="date" id="date" name="date" required>
+    <input class="btn btn-info special" type="submit" value="Filter Tasks">
+</form>
 
-<div class="center-column">
-    <form method="POST" action="/">
-        {% csrf_token %}
-        {{form.title}}
-        <input class="btn btn-info submit" type="submit" name="Create Task">
-    </form>
-    <a class="btn btn-sm btn-success filter" type="submit" href="{% url 'list_by_day'%}">Filter</a>
-    <div class="todo-list">
+<div class="todo-list">
         {% for task in tasks %}
-        <span>Added: {{task.date}}  {{task.created}} </span>
+        <span>Added: {{task.created}}</span>
         <div class="item-row">
             <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id%}">Update</a>
             <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Delete</a>
@@ -27,4 +30,5 @@
         </div>
         {% endfor %}
     </div>
-</div>
+</body>
+</html>
