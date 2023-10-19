@@ -4,7 +4,13 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'tasks/css/site.css' %}">
 </head>
-
+{% if request.user.is_authenticated%}
+    <p class="greating">Welcome back, {{request.user}}<a class="sign-out" href="{% url 'sign_out' %}">Sign out</a></p>
+{% else %}
+    <a href="">Sign in</a>
+    <a href="">Sign up</a>
+{% endif %}
+<hr>
 <div class="center-column">
     <form method="POST" action="/">
         {% csrf_token %}
