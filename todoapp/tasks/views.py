@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views import View
+
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -46,19 +49,33 @@ def sign_up(request):
     return render(request, 'tasks/login_register.html', context)
 
 
-@login_required(login_url='sign_in')
-def index(request):
-    tasks = Task.objects.all()
-    form = TaskForm()
+# @login_required(login_url='sign_in')
+# def index(request):
+#     tasks = Task.objects.all()
+#     form = TaskForm()
+#
+#     if request.method == 'POST':
+#         form = TaskForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('/')
+#
+#     context = {'tasks': tasks, 'form': form}
+#     return render(request, 'tasks/list.html', context)
+@method_decorator(login_required(login_url='sign_in'), name='dispatch')
+class Index(View):
+    def get(self, request):
+        tasks = Task.objects.all()
+        form = TaskForm()
+        context = {'tasks': tasks, 'form': form}
+        return render(request, 'tasks/list.html', context)
 
-    if request.method == 'POST':
+    def post(self, request):
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+             form.save()
         return redirect('/')
 
-    context = {'tasks': tasks, 'form': form}
-    return render(request, 'tasks/list.html', context)
 
 
 @login_required(login_url='sign_in')
@@ -74,21 +91,36 @@ def current_day_tasks(request):
     return render(request, 'tasks/list_by_day.html', context)
 
 
-@login_required(login_url='sign_in')
-def update_task(request, pk):
-    task = Task.objects.get(id=pk)
+# @login_required(login_url='sign_in')
+# def update_task(request, pk):
+#     task = Task.objects.get(id=pk)
+#
+#     form = TaskForm(instance=task)
+#
+#     if request.method == "POST":
+#         form = TaskForm(request.POST, instance=task)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('/')
+#
+#     context = {'form': form}
+#
+#     return render(request, 'tasks/update_task.html', context)
 
-    form = TaskForm(instance=task)
+@method_decorator(login_required(login_url='sign_in'), name='dispatch')
+class Update(View):
+    def get(self, request, pk):
+        task = Task.objects.get(id=pk)
+        form = TaskForm(instance=task)
+        context = {'form': form}
+        return render(request, 'tasks/update_task.html', context)
 
-    if request.method == "POST":
+    def post(self, request, pk):
+        task = Task.objects.get(id=pk)
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-        return redirect('/')
-
-    context = {'form': form}
-
-    return render(request, 'tasks/update_task.html', context)
+            return redirect('/')
 
 
 @login_required(login_url='sign_in')
